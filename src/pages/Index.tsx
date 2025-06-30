@@ -119,31 +119,30 @@ const Index = () => {
         {/* Main Content */}
         <main className="pb-20">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/view-bill" element={<ViewBill />} />
-            <Route path="/pay-bill" element={<PayBill />} />
-            <Route path="/prepaid-recharge" element={<PrepaidRecharge />} />
-            <Route path="/meter-reading" element={<MeterReading />} />
-            <Route path="/go-green" element={<GoGreen />} />
-            <Route path="/transformer-fault" element={<TransformerFault />} />
-            <Route path="/power-theft" element={<PowerTheft />} />
-            <Route path="/ag-index" element={<AGIndex />} />
-            <Route path="/contact-helpline" element={<ContactHelpline />} />
-            <Route path="/update-contact" element={<UpdateContact />} />
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/bill-calculator" element={<BillCalculator />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/usage-analytics" element={<UsageAnalytics />} />
-            <Route path="/documents" element={<DocumentVault />} />
-            <Route path="/settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} language={language} setLanguage={setLanguage} />} />
-            <Route path="/nearest-office" element={<NearestOffice />} />
-            <Route path="/connection-status" element={<NewConnectionStatus />} />
-            <Route path="/register-complaint" element={<RegisterComplaint />} />
-            <Route path="/pay-reconnection" element={<PayReconnection />} />
-            <Route path="/solar-pump-status" element={<SolarPumpStatus />} />
-            <Route path="/useful-links" element={<UsefulLinks />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route index element={<Dashboard />} />
+            <Route path="view-bill" element={<ViewBill />} />
+            <Route path="pay-bill" element={<PayBill />} />
+            <Route path="prepaid-recharge" element={<PrepaidRecharge />} />
+            <Route path="meter-reading" element={<MeterReading />} />
+            <Route path="go-green" element={<GoGreen />} />
+            <Route path="transformer-fault" element={<TransformerFault />} />
+            <Route path="power-theft" element={<PowerTheft />} />
+            <Route path="ag-index" element={<AGIndex />} />
+            <Route path="contact-helpline" element={<ContactHelpline />} />
+            <Route path="update-contact" element={<UpdateContact />} />
+            <Route path="feedback" element={<Feedback />} />
+            <Route path="bill-calculator" element={<BillCalculator />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="usage-analytics" element={<UsageAnalytics />} />
+            <Route path="documents" element={<DocumentVault />} />
+            <Route path="settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} language={language} setLanguage={setLanguage} />} />
+            <Route path="nearest-office" element={<NearestOffice />} />
+            <Route path="connection-status" element={<NewConnectionStatus />} />
+            <Route path="register-complaint" element={<RegisterComplaint />} />
+            <Route path="pay-reconnection" element={<PayReconnection />} />
+            <Route path="solar-pump-status" element={<SolarPumpStatus />} />
+            <Route path="useful-links" element={<UsefulLinks />} />
+            <Route path="about" element={<AboutUs />} />
           </Routes>
         </main>
 
