@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MapPin, Phone, Clock, Navigation } from 'lucide-react';
@@ -7,50 +6,36 @@ import { useNavigate } from 'react-router-dom';
 
 const NearestOffice = () => {
   const navigate = useNavigate();
-  const [selectedOffice, setSelectedOffice] = useState<any>(null);
 
   const offices = [
     {
       id: 1,
-      name: 'Sector 15 Division Office',
-      address: 'Plot No. 45, Sector 15, Phase 2, Cityville',
-      phone: '+91 22 2845 6789',
-      distance: '0.8 km',
-      timings: 'Mon-Fri: 9:00 AM - 6:00 PM\nSat: 9:00 AM - 2:00 PM',
-      services: ['Bill Payment', 'New Connection', 'Complaints', 'Meter Issues'],
-      coordinates: { lat: 19.0760, lng: 72.8777 }
+      name: 'MSEDCL Division Office - Pune',
+      address: '123 Main Street, Pune - 411001',
+      phone: '+91 020 2567 8900',
+      distance: '2.3 km',
+      hours: '9:00 AM - 5:00 PM',
+      services: ['Bill Payment', 'New Connections', 'Complaints']
     },
     {
       id: 2,
-      name: 'Main Collection Center',
-      address: '123 MG Road, Central District, Cityville',
-      phone: '+91 22 2845 1234',
-      distance: '2.1 km',
-      timings: 'Mon-Sat: 8:00 AM - 8:00 PM\nSun: 10:00 AM - 4:00 PM',
-      services: ['Bill Payment', 'Cash Collection', 'Receipts'],
-      coordinates: { lat: 19.0560, lng: 72.8277 }
+      name: 'MSEDCL Sub-Division Office - Kothrud',
+      address: '456 FC Road, Kothrud, Pune - 411029',
+      phone: '+91 020 2567 8901',
+      distance: '3.8 km',
+      hours: '9:00 AM - 5:00 PM',
+      services: ['Meter Reading', 'Load Changes', 'Technical Issues']
     },
     {
       id: 3,
-      name: 'Customer Service Center',
-      address: '789 Station Road, Near Railway Station, Cityville',
-      phone: '+91 22 2845 9876',
-      distance: '3.5 km',
-      timings: 'Mon-Fri: 10:00 AM - 7:00 PM\nSat: 10:00 AM - 5:00 PM',
-      services: ['Customer Support', 'Document Verification', 'Grievances'],
-      coordinates: { lat: 19.0360, lng: 72.8477 }
+      name: 'Collection Center - Baner',
+      address: '789 Baner Road, Baner, Pune - 411045',
+      phone: '+91 020 2567 8902',
+      distance: '5.2 km',
+      hours: '10:00 AM - 4:00 PM',
+      services: ['Bill Payment', 'Receipt Collection']
     }
   ];
-
-  const handleGetDirections = (office: any) => {
-    // In a real app, this would open maps with directions
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${office.coordinates.lat},${office.coordinates.lng}`;
-    window.open(mapsUrl, '_blank');
-  };
-
-  const handleCall = (phone: string) => {
-    window.location.href = `tel:${phone}`;
-  };
 
   return (
     <div className="p-4 space-y-6">
@@ -61,113 +46,88 @@ const NearestOffice = () => {
         >
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-2xl font-bold">Nearest Offices</h1>
+        <h1 className="text-2xl font-bold">Nearest Office</h1>
       </div>
 
-      {/* Location Info */}
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <MapPin className="text-blue-600" size={24} />
+      <Card className="bg-gradient-to-r from-blue-50 to-green-100 dark:from-blue-900/20 dark:to-green-800/20 border-blue-200">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-4">
+            <MapPin className="text-blue-600" size={32} />
             <div>
-              <h3 className="font-semibold text-blue-800 dark:text-blue-200">Your Location</h3>
-              <p className="text-sm text-blue-600 dark:text-blue-300">Sector 15, Phase 1, Cityville</p>
+              <h2 className="text-xl font-bold text-blue-800 dark:text-blue-200">Find Nearby Offices</h2>
+              <p className="text-blue-600 dark:text-blue-300">Locate the nearest MSEDCL office or collection center</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Map Placeholder */}
-      <Card>
-        <CardContent className="p-0">
-          <div className="h-48 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="text-blue-600 mx-auto mb-2" size={48} />
-              <p className="text-muted-foreground">Interactive Map</p>
-              <p className="text-sm text-muted-foreground">Showing nearby offices and collection centers</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Office List */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Nearby Offices & Centers</h2>
         {offices.map((office) => (
           <Card key={office.id} className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{office.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-2">{office.address}</p>
-                  <div className="flex items-center gap-2 text-sm text-green-600">
-                    <Navigation size={14} />
-                    <span>{office.distance} away</span>
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3">
+                  <MapPin className="text-green-600 mt-1" size={20} />
+                  <div>
+                    <CardTitle className="text-lg">{office.name}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{office.address}</p>
                   </div>
+                </div>
+                <span className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300 px-2 py-1 rounded-full text-xs font-medium">
+                  {office.distance}
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <Phone className="text-muted-foreground" size={16} />
+                  <span>{office.phone}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="text-muted-foreground" size={16} />
+                  <span>{office.hours}</span>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-start gap-2">
-                  <Clock size={16} className="text-muted-foreground mt-1" />
-                  <div>
-                    <p className="text-sm font-medium">Opening Hours</p>
-                    <p className="text-sm text-muted-foreground whitespace-pre-line">{office.timings}</p>
-                  </div>
+              <div>
+                <h3 className="font-semibold mb-2">Services Available</h3>
+                <div className="flex flex-wrap gap-2">
+                  {office.services.map((service, index) => (
+                    <span
+                      key={index}
+                      className="bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300 px-2 py-1 rounded-full text-xs"
+                    >
+                      {service}
+                    </span>
+                  ))}
                 </div>
+              </div>
 
-                <div>
-                  <p className="text-sm font-medium mb-1">Services Available</p>
-                  <div className="flex flex-wrap gap-1">
-                    {office.services.map((service, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 text-xs rounded-full"
-                      >
-                        {service}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleCall(office.phone)}
-                    className="flex-1"
-                  >
-                    <Phone size={14} className="mr-2" />
-                    Call
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => handleGetDirections(office)}
-                    className="flex-1"
-                  >
-                    <Navigation size={14} className="mr-2" />
-                    Directions
-                  </Button>
-                </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  <Navigation size={16} className="mr-2" />
+                  Get Directions
+                </Button>
+                <Button variant="outline" size="sm" className="flex-1" onClick={() => window.location.href = `tel:${office.phone}`}>
+                  <Phone size={16} className="mr-2" />
+                  Call Now
+                </Button>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Emergency Contact */}
-      <Card className="bg-red-50 dark:bg-red-900/20 border-red-200">
+      <Card className="bg-orange-50 dark:bg-orange-900/20 border-orange-200">
         <CardContent className="p-4">
-          <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">Emergency Contact</h3>
-          <p className="text-sm text-red-600 dark:text-red-300 mb-3">
-            For power outages and emergency situations, call our 24/7 helpline
+          <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">Emergency Contact</h3>
+          <p className="text-sm text-orange-600 dark:text-orange-300 mb-3">
+            For power outages or urgent issues, call the 24/7 helpline
           </p>
-          <Button
-            onClick={() => handleCall('1912')}
-            className="w-full bg-red-600 hover:bg-red-700 text-white"
-          >
+          <Button size="sm" onClick={() => window.location.href = 'tel:1912'}>
             <Phone size={16} className="mr-2" />
-            Call 1912 (Emergency)
+            Call 1912
           </Button>
         </CardContent>
       </Card>
