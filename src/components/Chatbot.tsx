@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Mic, MicOff, Download, Camera } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,9 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 
+interface Message {
+  id: number;
+  text: string;
+  isBot: boolean;
+  timestamp: Date;
+  hasDownload?: boolean;
+}
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { 
       id: 1, 
       text: "Hello! I'm your PowerSync assistant. I can help you with:\n• Generate and download bills\n• Pay bills\n• Submit meter readings\n• Register complaints\n• Track applications\n\nWhat would you like to do today?", 
@@ -132,7 +139,7 @@ Thank you for using PowerSync!
   const handleSend = () => {
     if (!input.trim()) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       id: Date.now(),
       text: input,
       isBot: false,
@@ -145,7 +152,7 @@ Thank you for using PowerSync!
 
     setTimeout(() => {
       const response = processMessage(input);
-      const botMessage = {
+      const botMessage: Message = {
         id: Date.now() + 1,
         text: response.text,
         isBot: true,
