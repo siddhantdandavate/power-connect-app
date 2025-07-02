@@ -1,9 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar';
-import Dashboard from '@/components/Dashboard';
-import LoginPage from '@/components/auth/LoginPage';
+import ConsumerDashboard from '@/components/dashboard/ConsumerDashboard';
+import SiteEngineerDashboard from '@/components/dashboard/SiteEngineerDashboard';
+import DeptHeadDashboard from '@/components/dashboard/DeptHeadDashboard';
+import RoleBasedLogin from '@/components/auth/RoleBasedLogin';
 import ViewBill from '@/components/services/ViewBill';
 import PayBill from '@/components/services/PayBill';
 import PrepaidRecharge from '@/components/services/PrepaidRecharge';
@@ -27,32 +28,29 @@ import PayReconnection from '@/components/navigation/PayReconnection';
 import SolarPumpStatus from '@/components/navigation/SolarPumpStatus';
 import UsefulLinks from '@/components/navigation/UsefulLinks';
 import AboutUs from '@/components/navigation/AboutUs';
-import Chatbot from '@/components/Chatbot';
+import TrainingDashboard from '@/components/training/TrainingDashboard';
+import SCORMViewer from '@/components/training/SCORMViewer';
+import IncidentHeatmap from '@/components/maps/IncidentHeatmap';
+import ForecastDashboard from '@/components/ai/ForecastDashboard';
+import WhatsAppIntegration from '@/components/whatsapp/WhatsAppIntegration';
+import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import EnhancedChatbot from '@/components/chatbot/EnhancedChatbot';
 import { Menu, Bell } from 'lucide-react';
+import { useUser } from '@/contexts/UserContext';
+import { useTranslation } from '@/hooks/useTranslation';
+import { User } from '@/types';
 
 const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, setUser, isLoggedIn } = useUser();
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
-    // Check if user is logged in
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      setIsLoggedIn(true);
-    }
-
     // Check theme preference
     const savedTheme = localStorage.getItem('darkMode');
     if (savedTheme) {
       setDarkMode(JSON.parse(savedTheme));
-    }
-
-    // Check language preference
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
     }
   }, []);
 
@@ -65,42 +63,56 @@ const Index = () => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    localStorage.setItem('authToken', 'dummy-token-123');
+  const handleLogin = (userData: User) => {
+    setUser(userData);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem('authToken');
+    setUser(null);
     setSidebarOpen(false);
   };
 
+  const getDashboardComponent = () => {
+    if (!user) return <ConsumerDashboard />;
+    
+    switch (user.role) {
+      case 'consumer':
+        return <ConsumerDashboard />;
+      case 'site_engineer':
+        return <SiteEngineerDashboard />;
+      case 'dept_head':
+        return <DeptHeadDashboard />;
+      default:
+        return <ConsumerDashboard />;
+    }
+  };
+
   if (!isLoggedIn) {
-    return <LoginPage onLogin={handleLogin} darkMode={darkMode} setDarkMode={setDarkMode} />;
+    return <RoleBasedLogin onLogin={handleLogin} darkMode={darkMode} setDarkMode={setDarkMode} />;
   }
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
       <div className="bg-background text-foreground min-h-screen">
         {/* Header */}
-        <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 flex items-center justify-between shadow-lg sticky top-0 z-40">
+        <header className="bg-gradient-to-r from-orange-600 to-red-700 text-white p-4 flex items-center justify-between shadow-lg sticky top-0 z-40">
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setSidebarOpen(true)}
-              className="p-2 hover:bg-blue-700 rounded-lg transition-colors"
+              className="p-2 hover:bg-red-700 rounded-lg transition-colors"
             >
               <Menu size={24} />
             </button>
             <div>
-              <h1 className="text-lg font-bold">PowerSync</h1>
-              <p className="text-xs opacity-90">Utility Management App</p>
+              <h1 className="text-lg font-bold">Mahavitaran</h1>
+              <p className="text-xs opacity-90">Analytics Platform</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button className="p-2 hover:bg-blue-700 rounded-lg transition-colors relative">
+            <LanguageSwitcher />
+            <button className="p-2 hover:bg-red-700 rounded-lg transition-colors relative">
               <Bell size={20} />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+              <span className="absolute -top-1 -right-1 bg-yellow-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
             </button>
           </div>
         </header>
@@ -112,14 +124,14 @@ const Index = () => {
           onLogout={handleLogout}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
-          language={language}
-          setLanguage={setLanguage}
+          language="en"
+          setLanguage={() => {}}
         />
 
         {/* Main Content */}
         <main className="pb-20">
           <Routes>
-            <Route index element={<Dashboard />} />
+            <Route index element={getDashboardComponent()} />
             <Route path="view-bill" element={<ViewBill />} />
             <Route path="pay-bill" element={<PayBill />} />
             <Route path="prepaid-recharge" element={<PrepaidRecharge />} />
@@ -135,7 +147,7 @@ const Index = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="usage-analytics" element={<UsageAnalytics />} />
             <Route path="documents" element={<DocumentVault />} />
-            <Route path="settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} language={language} setLanguage={setLanguage} />} />
+            <Route path="settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} language="en" setLanguage={() => {}} />} />
             <Route path="nearest-office" element={<NearestOffice />} />
             <Route path="connection-status" element={<NewConnectionStatus />} />
             <Route path="register-complaint" element={<RegisterComplaint />} />
@@ -143,11 +155,16 @@ const Index = () => {
             <Route path="solar-pump-status" element={<SolarPumpStatus />} />
             <Route path="useful-links" element={<UsefulLinks />} />
             <Route path="about" element={<AboutUs />} />
+            <Route path="training" element={<TrainingDashboard />} />
+            <Route path="training/module/:moduleId" element={<SCORMViewer />} />
+            <Route path="incident-map" element={<IncidentHeatmap />} />
+            <Route path="ai-forecast" element={<ForecastDashboard />} />
+            <Route path="whatsapp" element={<WhatsAppIntegration />} />
           </Routes>
         </main>
 
-        {/* Chatbot */}
-        <Chatbot />
+        {/* Enhanced Chatbot */}
+        <EnhancedChatbot />
 
         {/* Overlay for sidebar */}
         {sidebarOpen && (
