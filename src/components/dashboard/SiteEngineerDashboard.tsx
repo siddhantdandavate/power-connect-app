@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Clock, CheckCircle, IndianRupee, MapPin, TrendingUp } from 'lucide-react';
+import { AlertTriangle, Clock, CheckCircle, IndianRupee, MapPin, TrendingUp, TrendingDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useUser } from '@/contexts/UserContext';
