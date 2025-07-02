@@ -20,7 +20,7 @@ export const supportedLanguages: Language[] = [
   { code: 'ks', name: 'Kashmiri', nativeName: 'कॉशुर', flag: '🇮🇳' },
   { code: 'ko', name: 'Konkani', nativeName: 'कोंकणी', flag: '🇮🇳' },
   { code: 'mni', name: 'Manipuri', nativeName: 'মৈতৈলোন্', flag: '🇮🇳' },
-  { code: 'bo', name: 'Bodo', nativeName: 'बर'', flag: '🇮🇳' },
+  { code: 'bo', name: 'Bodo', nativeName: "बर'", flag: '🇮🇳' },
   { code: 'sat', name: 'Santali', nativeName: 'ᱥᱟᱱᱛᱟᱲᱤ', flag: '🇮🇳' },
   { code: 'mai', name: 'Maithili', nativeName: 'मैथिली', flag: '🇮🇳' },
   { code: 'doi', name: 'Dogri', nativeName: 'डोगरी', flag: '🇮🇳' }
