@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/useTranslation';
 import { aiService } from '@/services/aiService';
 import { Forecast } from '@/types';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const ForecastDashboard = () => {
   const navigate = useNavigate();
@@ -52,6 +53,14 @@ const ForecastDashboard = () => {
     ? Math.round(forecasts.reduce((sum, f) => sum + f.confidence, 0) / forecasts.length)
     : 0;
   const highRiskPeriods = forecasts.filter(f => f.riskLevel === 'high').length;
+
+  // Prepare chart data
+  const chartData = forecasts.map(forecast => ({
+    period: forecast.period,
+    incidents: forecast.incidents,
+    confidence: forecast.confidence,
+    riskScore: forecast.riskLevel === 'high' ? 3 : forecast.riskLevel === 'medium' ? 2 : 1
+  }));
 
   return (
     <div className="p-4 space-y-6">
@@ -120,6 +129,54 @@ const ForecastDashboard = () => {
             <TrendingUp className="text-red-600 mx-auto mb-2" size={24} />
             <p className="text-2xl font-bold text-red-600">{highRiskPeriods}</p>
             <p className="text-sm text-muted-foreground">High Risk Periods</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Forecast Visualization Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Incidents Timeline */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Predicted Incidents Timeline</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="period" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="incidents" 
+                  stroke="#f97316" 
+                  strokeWidth={3}
+                  dot={{ fill: '#f97316', strokeWidth: 2, r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Confidence & Risk Levels */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Confidence & Risk Analysis</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="period" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="confidence" fill="#3b82f6" name="Confidence %" />
+                <Bar dataKey="riskScore" fill="#ef4444" name="Risk Level" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>

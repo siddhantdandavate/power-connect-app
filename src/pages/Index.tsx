@@ -104,8 +104,8 @@ const Index = () => {
               <Menu size={24} />
             </button>
             <div>
-              <h1 className="text-lg font-bold">Mahavitaran</h1>
-              <p className="text-xs opacity-90">Analytics Platform</p>
+              <h1 className="text-lg font-bold">MSEFC</h1>
+              <p className="text-xs opacity-90">Karnataka Electricity</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

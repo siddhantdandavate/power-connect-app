@@ -45,7 +45,7 @@ const RoleBasedLogin = ({ onLogin, darkMode, setDarkMode }: RoleBasedLoginProps)
           id: Date.now().toString(),
           name: role === 'consumer' ? 'John Doe' : role === 'site_engineer' ? 'Rajesh Kumar' : 'Dr. Priya Sharma',
           mobile: `+91 ${mobile}`,
-          email: `${role}@mahavitaran.com`,
+          email: `${role}@msefc.karnataka.gov.in`,
           role,
           zone: role !== 'consumer' ? 'Zone A' : undefined,
           area: role !== 'consumer' ? 'Area 1' : undefined,
@@ -67,7 +67,7 @@ const RoleBasedLogin = ({ onLogin, darkMode, setDarkMode }: RoleBasedLoginProps)
         id: Date.now().toString(),
         name: role === 'consumer' ? 'John Doe' : role === 'site_engineer' ? 'Rajesh Kumar' : 'Dr. Priya Sharma',
         mobile: '+91 9876543210',
-        email: `${role}@mahavitaran.com`,
+        email: `${role}@msefc.karnataka.gov.in`,
         role,
         zone: role !== 'consumer' ? 'Zone A' : undefined,
         area: role !== 'consumer' ? 'Area 1' : undefined,
@@ -99,7 +99,7 @@ const RoleBasedLogin = ({ onLogin, darkMode, setDarkMode }: RoleBasedLoginProps)
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 ${darkMode ? 'dark' : ''}`}>
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen w-full flex items-center justify-center">
+      <div className="bg-gradient-to-br from-orange-50 to-red-100 dark:from-gray-900 dark:to-gray-800 min-h-screen w-full flex items-center justify-center">
         <button
           onClick={() => setDarkMode(!darkMode)}
           className="fixed top-4 right-4 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow"
@@ -112,8 +112,8 @@ const RoleBasedLogin = ({ onLogin, darkMode, setDarkMode }: RoleBasedLoginProps)
             <div className="bg-gradient-to-r from-orange-600 to-red-700 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl font-bold">M</span>
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Mahavitaran</h1>
-            <p className="text-gray-600 dark:text-gray-300">Utility Analytics Platform</p>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">MSEFC</h1>
+            <p className="text-gray-600 dark:text-gray-300">Mysuru State Electricity & Feedback Corporation</p>
           </div>
 
           <Card className="shadow-xl">
@@ -233,7 +233,7 @@ const RoleBasedLogin = ({ onLogin, darkMode, setDarkMode }: RoleBasedLoginProps)
                 variant="outline" 
                 onClick={handleDemoLogin}
                 disabled={loading}
-                className="w-full border-2 border-dashed border-blue-300 hover:border-blue-500 hover:bg-blue-50"
+                className="w-full border-2 border-dashed border-orange-300 hover:border-orange-500 hover:bg-orange-50"
               >
                 <div className="flex items-center gap-2">
                   {getRoleIcon(role)}

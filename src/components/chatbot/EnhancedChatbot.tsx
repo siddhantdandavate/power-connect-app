@@ -27,20 +27,21 @@ const EnhancedChatbot = () => {
   const [currentLanguage, setCurrentLanguage] = useState('en');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   useEffect(() => {
+    setCurrentLanguage(language);
     if (isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
         id: 1,
         text: getLocalizedText('welcome'),
         isBot: true,
         timestamp: new Date(),
-        language: currentLanguage
+        language: language
       };
       setMessages([welcomeMessage]);
     }
-  }, [isOpen, currentLanguage]);
+  }, [isOpen, language]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,14 +54,16 @@ const EnhancedChatbot = () => {
   const getLocalizedText = (key: string): string => {
     const texts: Record<string, Record<string, string>> = {
       welcome: {
-        en: "Hello! I'm your Mahavitaran AI assistant. I can help you with:\n• Generate and download bills\n• Pay bills\n• Submit meter readings\n• Register complaints\n• Track applications\n• AI forecasting\n• Training modules\n\nWhat would you like to do today?",
-        hi: "नमस्ते! मैं आपका महावितरण AI सहायक हूं। मैं आपकी मदद कर सकता हूं:\n• बिल जेनरेट और डाउनलोड करें\n• बिल भुगतान\n• मीटर रीडिंग जमा करें\n• शिकायत दर्ज करें\n• आवेदन ट्रैक करें\n• AI पूर्वानुमान\n• प्रशिक्षण मॉड्यूल\n\nआज आप क्या करना चाहेंगे?",
-        kn: "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಮಹಾವಿತರಣ AI ಸಹಾಯಕ. ನಾನು ನಿಮಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ:\n• ಬಿಲ್ ಜನರೇಟ್ ಮತ್ತು ಡೌನ್‌ಲೋಡ್\n• ಬಿಲ್ ಪಾವತಿ\n• ಮೀಟರ್ ರೀಡಿಂಗ್ ಸಲ್ಲಿಸಿ\n• ದೂರು ದಾಖಲಿಸಿ\n• ಅರ್ಜಿ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ\n• AI ಮುನ್ಸೂಚನೆ\n• ತರಬೇತಿ ಮಾಡ್ಯೂಲ್‌ಗಳು\n\nಇಂದು ನೀವು ಏನು ಮಾಡಲು ಬಯಸುತ್ತೀರಿ?"
+        en: "Hello! I'm your MSEFC AI assistant. I can help you with:\n• Generate and download bills\n• Pay bills\n• Submit meter readings\n• Register complaints\n• Track applications\n• AI forecasting\n• Training modules\n\nWhat would you like to do today?",
+        hi: "नमस्ते! मैं आपका MSEFC AI सहायक हूं। मैं आपकी मदद कर सकता हूं:\n• बिल जेनरेट और डाउनलोड करें\n• बिल भुगतान\n• मीटर रीडिंग जमा करें\n• शिकायत दर्ज करें\n• आवेदन ट्रैक करें\n• AI पूर्वानुमान\n• प्रशिक्षण मॉड्यूल\n\nआज आप क्या करना चाहेंगे?",
+        kn: "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ MSEFC AI ಸಹಾಯಕ. ನಾನು ನಿಮಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ:\n• ಬಿಲ್ ಜನರೇಟ್ ಮತ್ತು ಡೌನ್‌ಲೋಡ್\n• ಬಿಲ್ ಪಾವತಿ\n• ಮೀಟರ್ ರೀಡಿಂಗ್ ಸಲ್ಲಿಸಿ\n• ದೂರು ದಾಖಲಿಸಿ\n• ಅರ್ಜಿ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ\n• AI ಮುನ್ಸೂಚನೆ\n• ತರಬೇತಿ ಮಾಡ್ಯೂಲ್‌ಗಳು\n\nಇಂದು ನೀವು ಏನು ಮಾಡಲು ಬಯಸುತ್ತೀರಿ?",
+        mr: "नमस्कार! मी तुमचा MSEFC AI सहाय्यक आहे. मी तुम्हाला मदत करू शकतो:\n• बिल जनरेट आणि डाउनलोड करा\n• बिल भरणे\n• मीटर रीडिंग सबमिट करा\n• तक्रार नोंदवा\n• अर्ज ट्रॅक करा\n• AI अंदाज\n• प्रशिक्षण मॉड्यूल\n\nआज तुम्हाला काय करायचे आहे?"
       },
       billGenerated: {
         en: "I've generated your current bill. Here are the details:\n\n📄 **Bill Summary**\nConsumer: John Doe\nPeriod: June 2024\nUnits: 324 kWh\nAmount: ₹1,245\nDue Date: July 15, 2024\n\nWould you like me to download the full bill PDF?",
         hi: "मैंने आपका वर्तमान बिल तैयार किया है। यहाँ विवरण हैं:\n\n📄 **बिल सारांश**\nउपभोक्ता: John Doe\nअवधि: जून 2024\nयूनिट: 324 kWh\nराशि: ₹1,245\nदेय तिथि: 15 जुलाई, 2024\n\nक्या आप चाहते हैं कि मैं पूरा बिल PDF डाउनलोड करूं?",
-        kn: "ನಾನು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಬಿಲ್ ಅನ್ನು ತಯಾರಿಸಿದ್ದೇನೆ. ಇಲ್ಲಿ ವಿವರಗಳಿವೆ:\n\n📄 **ಬಿಲ್ ಸಾರಾಂಶ**\nಗ್ರಾಹಕ: John Doe\nಅವಧಿ: ಜೂನ್ 2024\nಯೂನಿಟ್‌ಗಳು: 324 kWh\nಮೊತ್ತ: ₹1,245\nದೇಯ ದಿನಾಂಕ: ಜುಲೈ 15, 2024\n\nನಾನು ಪೂರ್ಣ ಬಿಲ್ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಬೇಕೆ?"
+        kn: "ನಾನು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಬಿಲ್ ಅನ್ನು ತಯಾರಿಸಿದ್ದೇನೆ. ಇಲ್ಲಿ ವಿವರಗಳಿವೆ:\n\n📄 **ಬಿಲ್ ಸಾರಾಂಶ**\nಗ್ರಾಹಕ: John Doe\nಅವಧಿ: ಜೂನ್ 2024\nಯೂನಿಟ್‌ಗಳು: 324 kWh\nಮೊತ್ತ: ₹1,245\nದೇಯ ದಿನಾಂಕ: ಜುಲೈ 15, 2024\n\nನಾನು ಪೂರ್ಣ ಬಿಲ್ PDF ಡೌನ್‌ಲೋಡ್ ಮಾಡಬೇಕೆ?",
+        mr: "मी तुमचे सध्याचे बिल तयार केले आहे. येथे तपशील आहेत:\n\n📄 **बिल सारांश**\nग्राहक: John Doe\nकालावधी: जून 2024\nयुनिट्स: 324 kWh\nरक्कम: ₹1,245\nदेय दिनांक: 15 जुलै, 2024\n\nमी संपूर्ण बिल PDF डाउनलोड करू का?"
       }
     };
     
@@ -129,7 +132,7 @@ const EnhancedChatbot = () => {
   const downloadBillPDF = () => {
     const billData = generateDummyBill();
     const billContent = `
-MAHAVITARAN ELECTRICITY BILL
+MSEFC ELECTRICITY BILL
 ═══════════════════════════════════════
 
 Consumer Name: ${billData.consumerName}
@@ -141,7 +144,7 @@ Units Consumed: ${billData.unitsConsumed} kWh
 Amount Due: ₹${billData.amount}
 Due Date: ${billData.dueDate}
 
-Thank you for using Mahavitaran!
+Thank you for using MSEFC!
 ═══════════════════════════════════════
     `;
     
@@ -149,7 +152,7 @@ Thank you for using Mahavitaran!
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `mahavitaran-bill-${billData.billingPeriod.replace(' ', '-')}.txt`;
+    a.download = `msefc-bill-${billData.billingPeriod.replace(' ', '-')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -196,7 +199,7 @@ Thank you for using Mahavitaran!
       
       recognition.continuous = false;
       recognition.interimResults = false;
-      recognition.lang = currentLanguage === 'hi' ? 'hi-IN' : currentLanguage === 'kn' ? 'kn-IN' : 'en-US';
+      recognition.lang = currentLanguage === 'hi' ? 'hi-IN' : currentLanguage === 'kn' ? 'kn-IN' : currentLanguage === 'mr' ? 'mr-IN' : 'en-US';
 
       if (!isListening) {
         setIsListening(true);
@@ -228,7 +231,7 @@ Thank you for using Mahavitaran!
   const speakText = (text: string) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = currentLanguage === 'hi' ? 'hi-IN' : currentLanguage === 'kn' ? 'kn-IN' : 'en-US';
+      utterance.lang = currentLanguage === 'hi' ? 'hi-IN' : currentLanguage === 'kn' ? 'kn-IN' : currentLanguage === 'mr' ? 'mr-IN' : 'en-US';
       speechSynthesis.speak(utterance);
     }
   };
@@ -251,7 +254,7 @@ Thank you for using Mahavitaran!
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg flex items-center gap-2">
                 <MessageCircle size={20} />
-                Mahavitaran AI Assistant
+                MSEFC AI Assistant
               </CardTitle>
               <div className="flex items-center gap-2">
                 <select
@@ -262,6 +265,7 @@ Thank you for using Mahavitaran!
                   <option value="en">EN</option>
                   <option value="hi">हि</option>
                   <option value="kn">ಕನ್</option>
+                  <option value="mr">मर</option>
                 </select>
                 <button
                   onClick={() => setIsOpen(false)}

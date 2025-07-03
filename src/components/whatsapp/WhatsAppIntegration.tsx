@@ -4,11 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { MessageCircle, Phone, Bell, CheckCircle } from 'lucide-react';
+import { MessageCircle, Phone, Bell, CheckCircle, ArrowLeft } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useNavigate } from 'react-router-dom';
 
 const WhatsAppIntegration = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [whatsappNumber, setWhatsappNumber] = useState('+91 9876543210');
   const [notifications, setNotifications] = useState({
     billReminders: true,
@@ -28,7 +30,7 @@ const WhatsAppIntegration = () => {
 
   const sendTestMessage = () => {
     const message = encodeURIComponent(
-      `Hello! This is a test message from Mahavitaran PowerSync app. Your WhatsApp integration is working correctly. 
+      `Hello! This is a test message from MSEFC PowerSync app. Your WhatsApp integration is working correctly. 
 
 Current Bill: ₹1,245
 Due Date: July 15, 2024
@@ -38,6 +40,11 @@ Thank you for using our services!`
     );
     
     window.open(`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${message}`, '_blank');
+  };
+
+  const openWhatsAppChat = () => {
+    const message = encodeURIComponent('Hello MSEFC! I need help with my electricity connection.');
+    window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
   };
 
   const quickActions = [
@@ -69,6 +76,16 @@ Thank you for using our services!`
 
   return (
     <div className="p-4 space-y-6">
+      <div className="flex items-center gap-3 mb-6">
+        <button 
+          onClick={() => navigate('/')}
+          className="p-2 hover:bg-muted rounded-lg transition-colors"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <h1 className="text-2xl font-bold">{t('whatsapp')} Integration</h1>
+      </div>
+
       <Card className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200">
         <CardContent className="p-6">
           <div className="flex items-center gap-4">
@@ -84,6 +101,25 @@ Thank you for using our services!`
               </div>
             )}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick WhatsApp Contact */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Contact MSEFC Support</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button 
+            onClick={openWhatsAppChat}
+            className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+          >
+            <MessageCircle size={20} />
+            Chat with MSEFC on WhatsApp
+          </Button>
+          <p className="text-sm text-muted-foreground mt-2 text-center">
+            Get instant support for your electricity queries
+          </p>
         </CardContent>
       </Card>
 

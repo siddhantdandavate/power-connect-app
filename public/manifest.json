@@ -1,12 +1,11 @@
-
 {
-  "name": "PowerSync - Utility Management App",
-  "short_name": "PowerSync",
-  "description": "Complete electricity utility management application",
+  "name": "MSEFC - Mysuru State Electricity & Feedback Corporation",
+  "short_name": "MSEFC",
+  "description": "Complete electricity utility management application for Karnataka",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#2563eb",
-  "theme_color": "#1d4ed8",
+  "background_color": "#ea580c",
+  "theme_color": "#c2410c",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -28,6 +27,6 @@
     }
   ],
   "categories": ["utilities", "productivity", "business"],
-  "lang": "en",
+  "lang": "kn",
   "dir": "ltr"
 }
